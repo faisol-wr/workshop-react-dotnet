@@ -2,12 +2,30 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import CallConfig from "./Pages/CallConfig";
+import App from "./App";
+import MyLoop from "./Pages/MyLoop";
+import MyIfElse from "./Pages/MyIfElse";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+  },
+  {
+    path: "/myLoop",
+    element: <MyLoop />,
+  },
+  {
+    path: "/myIfElse",
+    element: <MyIfElse />,
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <CallConfig />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
