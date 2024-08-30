@@ -1,7 +1,12 @@
+import { useState } from "react";
+
 function App() {
+  const [counter, setCounter] = useState(0);
+
   return (
     <>
-      <h2>Hello World on React</h2>
+      <div>Counter = {counter}</div>
+      <button onClick={(e) => setCounter(counter + 1)}>Click Here</button>
     </>
   );
 }
