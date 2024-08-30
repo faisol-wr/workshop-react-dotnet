@@ -24,8 +24,8 @@ function CallApi() {
   };
   return (
     <>
-      {list.map((item) => (
-        <div>Title: {item.title}</div>
+      {list.map((item, index) => (
+        <div key={index}>Title: {item.title}</div>
       ))}
     </>
   );
