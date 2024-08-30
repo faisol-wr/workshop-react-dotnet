@@ -2,12 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import MyIfElse from "./Pages/MyIfElse";
+import MyLoop from "./Pages/MyLoop";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <MyIfElse />
+    <MyLoop />
   </React.StrictMode>
 );
 
