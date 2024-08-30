@@ -6,6 +6,7 @@ import App from "./App";
 import MyLoop from "./Pages/MyLoop";
 import MyIfElse from "./Pages/MyIfElse";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import CallApi from "./Pages/CallApi";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/myIfElse",
     element: <MyIfElse />,
+  },
+  {
+    path: "/callApi",
+    element: <CallApi />,
   },
 ]);
 
