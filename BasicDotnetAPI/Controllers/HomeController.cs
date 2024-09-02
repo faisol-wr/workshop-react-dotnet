@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Npgsql;
 
 namespace BasicDotnetAPI.Controllers
 {
@@ -21,14 +22,34 @@ namespace BasicDotnetAPI.Controllers
 
         [HttpPut]
         [Route("[action]")]
-        public IActionResult MyPut() {
-            return Ok(new {message = "my put"});
+        public IActionResult MyPut()
+        {
+            return Ok(new { message = "my put" });
         }
 
         [HttpDelete]
         [Route("[action]/{id}")]
-        public IActionResult Delete(int id) {
-            return Ok(new {message = "Delete " + id});
+        public IActionResult Delete(int id)
+        {
+            return Ok(new { message = "Delete " + id });
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult TestConnect()
+        {
+            try
+            {
+                using NpgsqlConnection conn = new Connect().GetConnection();
+                return Ok(new { message = "connected" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    message = ex.Message
+                });
+            }
         }
     }
 
