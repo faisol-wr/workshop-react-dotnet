@@ -23,9 +23,15 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Hello() 
+    public IActionResult Hello()
     {
         ViewBag.message = "IActionResult Hello";
+        return View();
+    }
+
+    public IActionResult GetParam(int x)
+    {
+        ViewBag.x = x + 10;
         return View();
     }
 
