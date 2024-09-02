@@ -1,0 +1,98 @@
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+[Oo]ut/
+[Aa]pplication[Ii]nsights/
+
+# Uncomment if you have tasks that create the following outputs in root
+# project.lock.json
+# project.fragment.lock.json
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.userprefs
+*.sln.docstates
+
+# Mono Auto Generated Files
+mono_crash.*
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# VS Code directories
+.vscode/
+
+# JetBrains Rider
+.idea/
+
+# Rider config files
+*.DotSettings.user
+
+# Rider's annotations files
+_annotations.xml
+
+# dotCover coverage results
+*.dcvr
+
+# R# settings files
+*.DotSettings
+
+# npm packages
+node_modules/
+
+# NuGet packages
+*.nupkg
+*.snupkg
+
+# ASP.NET Core files
+appsettings.json
+appsettings.Development.json
+appsettings.Staging.json
+appsettings.Production.json
+
+# Mac/Linux auto-generated files
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+*.swp
+*~
+
+# Windows OS generated files
+ntuser.dat
+ntuser.dat.log*
+*.iud
+
+# Local History for IntelliJ-based IDEs
+.idea/workspace.xml
+
+# Local history
+.localhistory/
+
+# .NET Core test results
+TestResults/
+
+# Generated publish files
+*.publishsettings
