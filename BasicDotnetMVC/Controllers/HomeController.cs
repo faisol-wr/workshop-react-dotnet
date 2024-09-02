@@ -35,6 +35,16 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult List() {
+        BookModel bookModel = new BookModel();
+        bookModel.Id = 1;
+        bookModel.Name = "C#.NET CORE";
+        bookModel.Price = 1500;
+
+        ViewBag.book = bookModel;
+        return View();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
