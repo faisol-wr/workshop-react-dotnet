@@ -1,4 +1,8 @@
+@{
+    BookModel bookModel = @ViewBag.book;
+}
+
 <h3>Book Info</h3>
-<div>ID = @ViewBag.book.Id</div>
-<div>Name = @ViewBag.book.Name</div>
-<div>Price = @ViewBag.book.Price</div>
+<div>ID = @bookModel.Id</div>
+<div>Name = @bookModel.Name</div>
+<div>Price = @bookModel.Price</div>
