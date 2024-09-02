@@ -1,0 +1,25 @@
+@page "ListFromModelByView"
+@{
+    List<BookModel> books = new BookModel().List(5);
+}
+
+<div>Book Data</div>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (BookModel b in books)
+        {
+            <tr>
+                <td>@b.Id</td>
+                <td>@b.Name</td>
+                <td>@b.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>
