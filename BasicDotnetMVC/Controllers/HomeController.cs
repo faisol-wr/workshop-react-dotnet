@@ -45,6 +45,11 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult ListFromModel() {
+        ViewBag.books = new BookModel().List(15);
+        return View();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
