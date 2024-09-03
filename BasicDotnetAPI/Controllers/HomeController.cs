@@ -235,6 +235,58 @@ namespace BasicDotnetAPI.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("[action]")]
+        public IActionResult UploadFile(IFormFile file)
+        {
+            try
+            {
+                if (file == null)
+                {
+                    return StatusCode(StatusCodes.Status501NotImplemented, new
+                    {
+                        message = "please choose file"
+                    });
+                }
+
+                string ext = Path.GetExtension(file.FileName).ToLower();
+
+                if (!(ext == ".jpg" || ext == ".jpeg" || ext == ".png"))
+                {
+                    return StatusCode(StatusCodes.Status501NotImplemented, new
+                    {
+                        message = "extension .jpg, .jpeg, .png only your ext = " + ext
+                    }); ;
+                }
+
+                DateTime dt = DateTime.Now;
+                Random random = new Random();
+                int randomNumber = random.Next(100000);
+                string newName = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}",
+                    dt.Year,
+                    dt.Month,
+                    dt.Day,
+                    dt.Hour,
+                    dt.Minute,
+                    dt.Second,
+                    randomNumber,
+                    ext
+                );
+                string target = "Images/" + newName;
+                FileStream fileStream = new FileStream(target, FileMode.Create);
+                file.CopyTo(fileStream);
+
+                return Ok(new { message = "upload success" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    message = ex.Message
+                });
+            }
+        }
+
     }
 
 }
