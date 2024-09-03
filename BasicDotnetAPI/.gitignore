@@ -67,7 +67,6 @@ node_modules/
 *.snupkg
 
 # ASP.NET Core files
-appsettings.json
 appsettings.Development.json
 appsettings.Staging.json
 appsettings.Production.json

@@ -1,6 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using Npgsql;
 using BasicDotnetAPI.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace BasicDotnetAPI.Controllers
 {
@@ -403,6 +408,53 @@ namespace BasicDotnetAPI.Controllers
                 {
                     message = "call to api error"
                 });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    message = ex.Message
+                });
+            }
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult GenerateToken(string username, string password)
+        {
+            try
+            {
+                if (username == "admin" && password == "admin")
+                {
+                    var MyConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+                    var issuer = MyConfig.GetValue<string>("Jwt:Issuer");
+                    var audience = MyConfig.GetValue<string>("Jwt:Audience");
+                    var key = Encoding.ASCII.GetBytes(MyConfig.GetValue<string>("Jwt:Key")!);
+                    var tokenDescriptor = new SecurityTokenDescriptor
+                    {
+                        Subject = new ClaimsIdentity(new[] {
+                            new Claim("Id", Guid.NewGuid().ToString()),
+                            new Claim(JwtRegisteredClaimNames.Sub, username),
+                            new Claim(JwtRegisteredClaimNames.Email, "user@mail.com"),
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                        }),
+                        Expires = DateTime.UtcNow.AddDays(1),
+                        Issuer = issuer,
+                        Audience = audience,
+                        SigningCredentials = new SigningCredentials(
+                            new SymmetricSecurityKey(key),
+                            SecurityAlgorithms.HmacSha512Signature
+                        )
+                    };
+
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var token = tokenHandler.CreateToken(tokenDescriptor);
+                    var jwtToken = tokenHandler.WriteToken(token);
+
+                    return Ok(new { token = jwtToken });
+                }
+
+                return Unauthorized();
             }
             catch (Exception ex)
             {
