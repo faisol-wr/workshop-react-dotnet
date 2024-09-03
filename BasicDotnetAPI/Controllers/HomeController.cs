@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
+using BasicDotnetAPI.Models;
 
 namespace BasicDotnetAPI.Controllers
 {
@@ -89,8 +90,10 @@ namespace BasicDotnetAPI.Controllers
 
         [HttpGet]
         [Route("[action]/{id}")]
-        public IActionResult Info(int id) {
-            try {
+        public IActionResult Info(int id)
+        {
+            try
+            {
                 using NpgsqlConnection conn = new Connect().GetConnection();
                 using NpgsqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SELECT * FROM tb_book WHERE id = @id";
@@ -98,20 +101,69 @@ namespace BasicDotnetAPI.Controllers
 
                 using NpgsqlDataReader reader = cmd.ExecuteReader();
 
-                if (reader.Read()) {
-                    return Ok(new {
+                if (reader.Read())
+                {
+                    return Ok(new
+                    {
                         id = Convert.ToInt32(reader["id"]),
                         isbn = reader["isbn"].ToString(),
                         name = reader["name"].ToString(),
                         price = Convert.ToInt32(reader["price"])
                     });
-                } else {
-                    return StatusCode(StatusCodes.Status501NotImplemented, new {
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status501NotImplemented, new
+                    {
                         message = "not found id"
                     });
                 }
-            } catch (Exception ex) {
-                return StatusCode(StatusCodes.Status500InternalServerError, new {
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    message = ex.Message
+                });
+            }
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public IActionResult Edit(BookModel bookModel)
+        {
+            try
+            {
+                using NpgsqlConnection conn = new Connect().GetConnection();
+                using NpgsqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = @"
+                    UPDATE tb_book SET
+                        isbn = @isbn,
+                        name = @name,
+                        price = @price
+                    WHERE id = @id
+                ";
+                cmd.Parameters.AddWithValue("isbn", bookModel.isbn!);
+                cmd.Parameters.AddWithValue("name", bookModel.name!);
+                cmd.Parameters.AddWithValue("price", bookModel.price);
+                cmd.Parameters.AddWithValue("id", bookModel.id);
+
+                if (cmd.ExecuteNonQuery() != -1)
+                {
+                    return Ok(new { message = "success" });
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status501NotImplemented, new
+                    {
+                        message = "update error"
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
                     message = ex.Message
                 });
             }
