@@ -203,6 +203,38 @@ namespace BasicDotnetAPI.Controllers
             }
         }
 
+        [HttpDelete]
+        [Route("[action]/{id}")]
+        public IActionResult Remove(int id)
+        {
+            try
+            {
+                using NpgsqlConnection conn = new Connect().GetConnection();
+                using NpgsqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "DELETE FROM tb_book WHERE id = @id";
+                cmd.Parameters.AddWithValue("id", id);
+
+                if (cmd.ExecuteNonQuery() != -1)
+                {
+                    return Ok(new { message = "success" });
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status501NotImplemented, new
+                    {
+                        message = "delete error"
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    message = ex.Message
+                });
+            }
+        }
+
     }
 
 }
