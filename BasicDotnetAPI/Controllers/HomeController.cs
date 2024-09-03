@@ -350,6 +350,68 @@ namespace BasicDotnetAPI.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("[action]")]
+        async public Task<IActionResult> MyPut2()
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage res = await client.PutAsJsonAsync("https://fakestoreapi.com/products/7", new
+                {
+                    title = "test product",
+                    price = 13.5,
+                    description = "lorem ipsum set",
+                    image = "https://i.pravatar.c",
+                    category = "electronic"
+                });
+
+                if (res.IsSuccessStatusCode)
+                {
+                    return Ok(await res.Content.ReadAsStringAsync());
+                }
+
+                return StatusCode(StatusCodes.Status501NotImplemented, new
+                {
+                    message = "call to api error"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    message = ex.Message
+                });
+            }
+        }
+
+        [HttpDelete]
+        [Route("[action]")]
+        async public Task<IActionResult> MyDelete(int id)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage res = await client.DeleteAsync("https://fakestoreapi.com/products/" + id);
+
+                if (res.IsSuccessStatusCode)
+                {
+                    return Ok(await res.Content.ReadAsStringAsync());
+                }
+
+                return StatusCode(StatusCodes.Status501NotImplemented, new
+                {
+                    message = "call to api error"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    message = ex.Message
+                });
+            }
+        }
 
     }
 
