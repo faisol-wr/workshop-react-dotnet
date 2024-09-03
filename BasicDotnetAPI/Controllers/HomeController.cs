@@ -287,6 +287,34 @@ namespace BasicDotnetAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("[action]")]
+        async public Task<IActionResult> MyGet()
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage res = await client.GetAsync("https://fakestoreapi.com/products");
+
+                if (res.IsSuccessStatusCode)
+                {
+                    return Ok(await res.Content.ReadAsStringAsync());
+                }
+
+                return StatusCode(StatusCodes.Status501NotImplemented, new
+                {
+                    message = "call to api error"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    message = ex.Message
+                });
+            }
+        }
+
     }
 
 }
