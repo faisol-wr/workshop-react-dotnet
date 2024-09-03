@@ -69,10 +69,10 @@ namespace BasicDotnetAPI.Controllers
                 {
                     list.Add(new
                     {
-                        id = Convert.ToInt32(reader["Id"]),
-                        isbn = reader["Isbn"].ToString(),
-                        name = reader["Name"].ToString(),
-                        price = Convert.ToInt32(reader["Price"])
+                        id = Convert.ToInt32(reader["id"]),
+                        isbn = reader["isbn"].ToString(),
+                        name = reader["name"].ToString(),
+                        price = Convert.ToInt32(reader["price"])
                     });
                 }
 
@@ -82,6 +82,36 @@ namespace BasicDotnetAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new
                 {
+                    message = ex.Message
+                });
+            }
+        }
+
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public IActionResult Info(int id) {
+            try {
+                using NpgsqlConnection conn = new Connect().GetConnection();
+                using NpgsqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT * FROM tb_book WHERE id = @id";
+                cmd.Parameters.AddWithValue("id", id);
+
+                using NpgsqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read()) {
+                    return Ok(new {
+                        id = Convert.ToInt32(reader["id"]),
+                        isbn = reader["isbn"].ToString(),
+                        name = reader["name"].ToString(),
+                        price = Convert.ToInt32(reader["price"])
+                    });
+                } else {
+                    return StatusCode(StatusCodes.Status501NotImplemented, new {
+                        message = "not found id"
+                    });
+                }
+            } catch (Exception ex) {
+                return StatusCode(StatusCodes.Status500InternalServerError, new {
                     message = ex.Message
                 });
             }
