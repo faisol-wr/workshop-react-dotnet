@@ -315,6 +315,42 @@ namespace BasicDotnetAPI.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("[action]")]
+        async public Task<IActionResult> MyPost()
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage res = await client.PostAsJsonAsync("https://fakestoreapi.com/products", new
+                {
+                    title = "test product",
+                    price = 13.5,
+                    description = "lorem ipsum set",
+                    image = "https://i.pravatar.cc",
+                    category = "electronic"
+                });
+
+                if (res.IsSuccessStatusCode)
+                {
+                    return Ok(await res.Content.ReadAsStringAsync());
+                }
+
+                return StatusCode(StatusCodes.Status501NotImplemented, new
+                {
+                    message = "call to api error"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    message = ex.Message
+                });
+            }
+        }
+
+
     }
 
 }
