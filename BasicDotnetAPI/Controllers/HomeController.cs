@@ -169,6 +169,40 @@ namespace BasicDotnetAPI.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("[action]")]
+        public IActionResult Create(BookModel bookModel)
+        {
+            try
+            {
+                using NpgsqlConnection conn = new Connect().GetConnection();
+                using NpgsqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "INSERT INTO tb_book(isbn, name, price) VALUES(@isbn, @name, @price)";
+                cmd.Parameters.AddWithValue("isbn", bookModel.isbn!);
+                cmd.Parameters.AddWithValue("name", bookModel.name!);
+                cmd.Parameters.AddWithValue("price", bookModel.price);
+
+                if (cmd.ExecuteNonQuery() != -1)
+                {
+                    return Ok(new { message = "success" });
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status501NotImplemented, new
+                    {
+                        message = "insert error"
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    message = ex.Message
+                });
+            }
+        }
+
     }
 
 }
