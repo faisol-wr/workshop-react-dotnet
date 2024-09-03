@@ -465,6 +465,14 @@ namespace BasicDotnetAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("[action]")]
+        [Authorize]
+        public IActionResult SayHello()
+        {
+            return Ok(new { message = "Hello" });
+        }
+
     }
 
 }
