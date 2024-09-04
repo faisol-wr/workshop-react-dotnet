@@ -11,7 +11,7 @@
     </thead>
     <tbody>
         @foreach (BookModel b in ViewBag.books)
-        { 
+        {
             <tr>
                 <td>@b.Id</td>
                 <td>@b.Isbn</td>
@@ -20,7 +20,7 @@
                 <td class="text-center">
                     <a class="btn btn-primary">View</a>
                     <a class="btn btn-success" href="/Crud/Edit/@b.Id">Edit</a>
-                    <a class="btn btn-danger">Delete</a>
+                    <a class="btn btn-danger" href="/Crud/Delete/@b.Id" onclick="return confirm('Delete')">Delete</a>
                 </td>
             </tr>
         }

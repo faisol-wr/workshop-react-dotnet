@@ -61,5 +61,18 @@ namespace BasicDotnetMVC.Controllers
                 Response.Redirect("Error");
             }
         }
+
+        public async Task Delete(int id)
+        {
+            var res = await client.DeleteAsync(Api + "/api/Home/Remove/" + id);
+            if (res.IsSuccessStatusCode)
+            {
+                Response.Redirect("/Crud/Index");
+            }
+            else
+            {
+                Response.Redirect("/Crud/Error");
+            }
+        }
     }
 }
