@@ -10,6 +10,7 @@ using System.Text;
 namespace BasicDotnetAPI.Controllers
 {
     [ApiController]
+    [Route("api/[controller]")]
     public class HomeController : Controller
     {
         [HttpGet]
