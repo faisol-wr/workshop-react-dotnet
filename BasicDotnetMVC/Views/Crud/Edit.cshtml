@@ -1,0 +1,23 @@
+@{
+    BookModel book = @ViewBag.book;
+}
+
+<form action="/Crud/EditSave" method="post">
+    <div>
+        <label>isbn</label>
+        <input class="form-control" value=@book.Isbn name="isbn" />
+    </div>
+    <div>
+        <label>name</label>
+        <input class="form-control" value=@book.Name name="name" />
+    </div>
+    <div>
+        <label>price</label>
+        <input class="form-control" value=@book.Price name="price" />
+    </div>
+    <div>
+        <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+
+    <input type="hidden" name="id" value="@book.Id" />
+</form>

@@ -42,5 +42,24 @@ namespace BasicDotnetMVC.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            ViewBag.book = await client.GetFromJsonAsync<BookModel>(Api + "/api/Home/Info/" + id);
+            return View();
+        }
+
+        public async Task EditSave(BookModel bookModel)
+        {
+            var res = await client.PostAsJsonAsync(Api + "/api/Home/Edit", bookModel);
+            if (res.IsSuccessStatusCode)
+            {
+                Response.Redirect("Index");
+            }
+            else
+            {
+                Response.Redirect("Error");
+            }
+        }
     }
 }
