@@ -74,5 +74,12 @@ namespace BasicDotnetMVC.Controllers
                 Response.Redirect("/Crud/Error");
             }
         }
+
+       public async Task<IActionResult> View(int id)
+        {
+            ViewBag.book = await client.GetFromJsonAsync<BookModel>(Api + "/api/Home/Info/" + id);
+            return View();
+        }
+
     }
 }
