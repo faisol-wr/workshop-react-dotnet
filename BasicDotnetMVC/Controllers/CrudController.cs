@@ -14,5 +14,33 @@ namespace BasicDotnetMVC.Controllers
             return View();
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        public async Task CreateSave(BookModel bookModel)
+        {
+            var res = await client.PutAsJsonAsync(Api + "/api/Home/Create", bookModel);
+
+            if (res.IsSuccessStatusCode)
+            {
+                Response.Redirect("Success");
+            }
+            else
+            {
+                Response.Redirect("Error");
+            }
+        }
+
+        public IActionResult Success()
+        {
+            return View();
+        }
+
+        public IActionResult Error()
+        {
+            return View();
+        }
     }
 }
