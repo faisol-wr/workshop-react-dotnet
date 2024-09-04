@@ -1,11 +1,12 @@
 <h2>Book From Database</h2>
-<table>
+<table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>id</th>
             <th>isbn</th>
             <th>name</th>
             <th>price</th>
+            <th width="220px"></th>
         </tr>
     </thead>
     <tbody>
@@ -16,6 +17,11 @@
                 <td>@b.Isbn</td>
                 <td>@b.Name</td>
                 <td>@b.Price</td>
+                <td class="text-center">
+                    <a class="btn btn-primary">View</a>
+                    <a class="btn btn-Success">Edit</a>
+                    <a class="btn btn-danger">Delete</a>
+                </td>
             </tr>
         }
     </tbody>
