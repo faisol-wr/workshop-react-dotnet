@@ -5,12 +5,12 @@ namespace BasicDotnetMVC.Controllers
 {
     public class CrudController : Controller
     {
-        private string Api = "http://localhost:5072";
+        private string Api = "http://localhost:5037/";
         private HttpClient client = new HttpClient();
 
         public async Task<IActionResult> Index()
         {
-            ViewBag.books = await client.GetFromJsonAsync<List<BookModel>>(Api + "/Home/List");
+            ViewBag.books = await client.GetFromJsonAsync<List<BookModel>>(Api + "List");
             return View();
         }
     }
