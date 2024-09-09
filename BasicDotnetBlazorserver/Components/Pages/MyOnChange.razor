@@ -3,24 +3,47 @@
 
 <h3>On Change Using</h3>
 <input class="form-control" @onchange="changeInput1" />
+<div>@validate1</div>
+
 <input class="form-control" @onchange="changeInput2" />
-<div>Result = @result</div>
+<div>@validate2</div>
+
+<div class="alert alert-success">Result = @result</div>
 
 @code {
     private int input1;
     private int input2;
     private int result;
 
+    private string validate1;
+    private string validate2;
+
     private void changeInput1(ChangeEventArgs e)
     {
-        input1 = Convert.ToInt32(e.Value?.ToString());
-        calculate();
+        validate1 = "";
+        try
+        {
+            input1 = Convert.ToInt32(e.Value?.ToString());
+            calculate();
+        }
+        catch
+        {
+            validate1 = "please enter number only";
+        }
     }
 
     private void changeInput2(ChangeEventArgs e)
     {
-        input2 = Convert.ToInt32(e.Value?.ToString());
-        calculate();
+        validate2 = "";
+        try
+        {
+            input2 = Convert.ToInt32(e.Value?.ToString());
+            calculate();
+        }
+        catch
+        {
+            validate2 = "please enter number only";
+        }
     }
 
     private void calculate()
