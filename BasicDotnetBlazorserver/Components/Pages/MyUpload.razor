@@ -1,0 +1,39 @@
+@page "/myUpload"
+@rendermode InteractiveServer
+@using System.IO;
+@inject IWebHostEnvironment env;
+
+<h3>Upload File</h3>
+<h4>@message</h4>
+
+<form @onsubmit="OnSubmit" method="post" enctype="multipart/form-data">
+    <InputFile OnChange="OnInputFileChange" />
+    <button class="btn btn-primary">Upload File Now</button>
+</form>
+
+@code {
+    string? message = "no file selected";
+    IBrowserFile? selectedFile;
+
+    private async void OnSubmit()
+    {
+        string path = env.WebRootPath + "/" + selectedFile!.Name;
+        Stream stream = selectedFile.OpenReadStream(maxAllowedSize: 5000 * 1024);
+        MemoryStream mem = new MemoryStream();
+        await stream.CopyToAsync(mem);
+
+        using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
+        {
+            mem.WriteTo(fs);
+        }
+        message = "Upload Success";
+        StateHasChanged();
+    }
+
+    private void OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        selectedFile = e.File;
+        message = "file selected is " + selectedFile.Name;
+        StateHasChanged();
+    }
+}
