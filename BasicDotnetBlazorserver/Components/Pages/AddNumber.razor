@@ -1,0 +1,33 @@
+@page "/addNumber"
+@rendermode InteractiveServer
+
+<PageTitle>Add Number</PageTitle>
+
+<h3>Add Number</h3>
+
+<div>
+    <label>Number 1</label>
+    <input class="form-control" @bind="number1" />
+</div>
+
+<div>
+    <label>Number 2</label>
+    <input class="form-control" @bind="number2" />
+</div>
+
+<div>
+    <label>Result is @result</label>
+</div>
+
+<button class="btn btn-primary" @onclick="AddNum">Add Now</button>
+
+@code {
+    private int result;
+    private int number1;
+    private int number2;
+
+    private void AddNum()
+    {
+        result = number1 + number2;
+    }
+}
