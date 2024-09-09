@@ -1,0 +1,30 @@
+@page "/myOnChange"
+@rendermode InteractiveServer
+
+<h3>On Change Using</h3>
+<input class="form-control" @onchange="changeInput1" />
+<input class="form-control" @onchange="changeInput2" />
+<div>Result = @result</div>
+
+@code {
+    private int input1;
+    private int input2;
+    private int result;
+
+    private void changeInput1(ChangeEventArgs e)
+    {
+        input1 = Convert.ToInt32(e.Value?.ToString());
+        calculate();
+    }
+
+    private void changeInput2(ChangeEventArgs e)
+    {
+        input2 = Convert.ToInt32(e.Value?.ToString());
+        calculate();
+    }
+
+    private void calculate()
+    {
+        result = input1 + input2;
+    }
+}
