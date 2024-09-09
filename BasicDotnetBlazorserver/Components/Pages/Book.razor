@@ -1,0 +1,59 @@
+@page "/book"
+@rendermode InteractiveServer
+
+<h3>Book</h3>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Isbn</th>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (BookModel book in books)
+        {
+            <tr>
+                <td>@book.Id</td>
+                <td>@book.Isbn</td>
+                <td>@book.Name</td>
+                <td>@book.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+
+    private List<BookModel> books = new List<BookModel>();
+
+    protected override void OnInitialized()
+    {
+        fechData();
+    }
+
+    public void fechData()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            books.Add(new BookModel
+                {
+                    Id = i,
+                    Price = i + 10 * i + 1,
+                    Name = "DOTNET BLASOR " + i,
+                    Isbn = "" + i + i + i + i
+                });
+        }
+    }
+
+
+    public class BookModel
+    {
+        public int Id { get; set; }
+        public int Price { get; set; }
+        public string? Isbn { get; set; }
+        public string? Name { get; set; }
+    }
+}
