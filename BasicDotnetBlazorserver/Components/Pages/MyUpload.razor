@@ -36,4 +36,9 @@
         message = "file selected is " + selectedFile.Name;
         StateHasChanged();
     }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("Hello First Doing");
+    }
 }
